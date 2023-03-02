@@ -1,4 +1,4 @@
-from Chuck import *
+from Chuck_1102_Scrabble import *
 
 #
 # Test code
