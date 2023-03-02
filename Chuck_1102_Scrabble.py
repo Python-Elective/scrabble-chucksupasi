@@ -164,8 +164,22 @@ def update_hand(hand, word):
     hand: dictionary (string -> int)    
     returns: dictionary (string -> int)
     """
-    # TO DO ... <-- Remove this comment when you code this function
-
+    # Checking preconditions
+    assert len(hand) > 0, "The hand is empty."
+    assert len(word) > 0, "There was no input."
+    assert type(word) == str, "The word must be a string"
+    assert type(hand) == dict, "The hand must be a dictionary."
+    assert word.islower() == True, "The word must be lower-case."
+    # Updating the hand
+    hand_copy = hand.copy()
+    for letter in word:
+        hand_copy[letter] -= 1
+        if hand_copy[letter] == 0:
+            del hand_copy[letter]
+    # Check post-conditions
+    assert hand_copy != hand, "The hand was changed together with the hand_copy."
+    assert type(hand_copy) == dict, "The new hand is not a dictionary."
+    return hand_copy
 
 #
 # Problem #3: Test word validity
