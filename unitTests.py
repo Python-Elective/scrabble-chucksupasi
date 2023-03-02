@@ -6,7 +6,6 @@ from Chuck_1102_Scrabble import *
 
 # To run these tests, simply run this file (open up in your IDE, then run the file as normal)
 
-
 def test_get_word_score():
     """
     Unit test for get_word_score
