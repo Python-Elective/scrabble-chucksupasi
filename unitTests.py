@@ -26,7 +26,6 @@ def test_get_word_score():
 
 # end of test_get_word_score
 
-
 def test_update_hand():
     """
     Unit test for update_hand
