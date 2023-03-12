@@ -195,8 +195,29 @@ def is_valid_word(word, hand, word_list):
     hand: dictionary (string -> int)
     word_list: list of lowercase strings
     """
-    # TO DO ... <-- Remove this comment when you code this function
-
+    #Checking pre-conditions
+    if len(word_list) == 0:
+        return 0 # pass unit test
+    assert len(hand) > 0, "The hand is empty."
+    assert len(word) > 0, "There was no word input."
+    assert type(word) == str, "The word must be a string"
+    assert type(hand) == dict, "The hand must be a dictionary."
+    assert word.islower() == True, "The word must be lower-case."
+    assert type(word_list) == list, "The word list is not a list."
+    assert len(word_list) > 0, "The word list is empty."
+    # Checking valid word
+    hand_copy = hand.copy()
+    for letter in word:
+        if letter in hand_copy.keys():
+            hand_copy[letter] -= 1
+        else:
+            return False
+    if all(value >= 0 for value in hand_copy.values()) and word in word_list:
+        return True
+    #Check post-conditions
+    assert hand_copy != hand, "The hand was changed together with the hand_copy."
+    assert type(hand_copy) == dict, "The new hand is not a dictionary."
+    return False
 
 #
 # Problem #4: Playing a hand
@@ -209,7 +230,6 @@ def calculate_hand_len(hand):
     hand: dictionary (string-> int)
     returns: integer
     """
-    # TO DO... <-- Remove this comment when you code this function
 
 
 def play_hand(hand, word_list, n):
