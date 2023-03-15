@@ -230,7 +230,12 @@ def calculate_hand_len(hand):
     hand: dictionary (string-> int)
     returns: integer
     """
+    assert type(hand) == dict, "The hand must be a dictionary." 
+    return sum(hand.values())
 
+print(calculate_hand_len({"h": 1, "e": 1, "l": 2, "o": 1})) #Test case 1 (Expected: 5)
+print(calculate_hand_len({"z": 2})) #Test case 2 (Expected: 2)
+print(calculate_hand_len({})) #Test case 3 (Expected 0)
 
 def play_hand(hand, word_list, n):
     """
