@@ -198,7 +198,6 @@ def is_valid_word(word, hand, word_list):
     #Checking pre-conditions
     if len(word_list) == 0:
         return 0 # pass unit test
-    assert len(hand) > 0, "The hand is empty."
     assert len(word) > 0, "There was no word input."
     assert type(word) == str, "The word must be a string"
     assert type(hand) == dict, "The hand must be a dictionary."
@@ -233,9 +232,9 @@ def calculate_hand_len(hand):
     assert type(hand) == dict, "The hand must be a dictionary." 
     return sum(hand.values())
 
-print(calculate_hand_len({"h": 1, "e": 1, "l": 2, "o": 1})) #Test case 1 (Expected: 5)
-print(calculate_hand_len({"z": 2})) #Test case 2 (Expected: 2)
-print(calculate_hand_len({})) #Test case 3 (Expected 0)
+#print(calculate_hand_len({"h": 1, "e": 1, "l": 2, "o": 1})) #Test case 1 (Expected: 5)
+#print(calculate_hand_len({"z": 2})) #Test case 2 (Expected: 2)
+#print(calculate_hand_len({})) #Test case 3 (Expected 0)
 
 def play_hand(hand, word_list, n):
     """
@@ -260,32 +259,46 @@ def play_hand(hand, word_list, n):
 
     """
     # BEGIN PSEUDOCODE <-- Remove this comment when you code this function; do your coding within the pseudocode (leaving those comments in-place!)
+    hand_copy = hand.copy()
     # Keep track of the total score
-
+    total_score = 0
     # As long as there are still letters left in the hand:
-
+    while True:
     # Display the hand
-
+        print("Current hand: ", end=" ")
+        display_hand(hand_copy)
     # Ask user for input
-
+        word_input = input("Enter word, or a '.' to indicate that you are finished: ")
+        while word_input == "":
+            print("You have not inputted a word.")
+            word_input = input("Enter word, or a '.' to indicate that you are finished: ")
     # If the input is a single period:
-
+        if word_input == ".":
     # End the game (break out of the loop)
-
+            print("Goodbye! Total score:", str(total_score), "points.")
+            print("")
+            break
     # Otherwise (the input is not a single period):
-
+        else:
     # If the word is not valid:
-
+            if is_valid_word(word_input, hand_copy, word_list) == False:
     # Reject invalid word (print a message followed by a blank line)
-
+                print("Invalid word, please try again.")
+                print("")
     # Otherwise (the word is valid):
-
+            else:
     # Tell the user how many points the word earned, and the updated total score, in one line followed by a blank line
-
+                score = get_word_score(word_input, n)
+                total_score += score
+                print("'" + word_input + "'", "earned", str(score), "points. Total:", str(total_score), "points")
+                print("")
     # Update the hand
-
+                hand_copy = update_hand(hand_copy, word_input)
     # Game is over (user entered a '.' or ran out of letters), so tell user the total score
-
+        if calculate_hand_len(hand_copy) == 0:
+            print("Run out of letters.", "Total Score:", str(total_score), "points.")
+            print("")
+            break
 
 #
 # Problem #5: Playing a game
@@ -305,8 +318,22 @@ def play_game(word_list):
     """
     # TO DO ... <-- Remove this comment when you code this function
     # <-- Remove this line when you code the function
-    print("play_game not yet implemented.")
-
+    hand = {}
+    while True:
+        input_letter = input("Enter n to deal a new hand, r to replay the last hand, or e to end game: ")
+        if input_letter == "n":
+            hand = deal_hand(8)
+            play_hand(hand, word_list, 8)
+        elif input_letter == "r":
+            if hand == {}:
+                print("You have not played a hand yet. Please play a new hand first!")
+                print("")
+            else:
+                play_hand(hand, word_list, 8)
+        elif input_letter == "e":
+            break
+        else:
+            print("Invalid command.")
 
 #
 # Build data structures used for entire session and play game
